@@ -5,7 +5,7 @@ import React from 'react'
 
 const Home = () => {
 
-  const loggedIn = { firstName: "danial" }
+  const loggedIn = { firstName: "Danial", lastName: "Fakhrabadi", email:"danialfakhrabadi@gmail.com" }
   return (
     <section className='home'>
       <div className='home-content'>
