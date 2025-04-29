@@ -1,8 +1,14 @@
 import React from 'react'
-
-const BankCard = () => {
+import Link from 'next/link'
+const BankCard = ({ account, userName, showBalance = true }: CreditCardProps) => {
   return (
-    <div>BankCard</div>
+    <div className='flex flex-col'>
+
+      <Link href='/' className='bank-card '>
+        
+      </Link>
+
+    </div>
   )
 }
 
