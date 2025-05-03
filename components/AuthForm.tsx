@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { use } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
@@ -19,8 +19,10 @@ import {
 import { Input } from "@/components/ui/input"
 import CustomInput from './CustomInput'
 import { authFormSchema } from '@/lib/utils'
+import { Loader2 } from 'lucide-react'
 const AuthForm = ({ type }: { type: string }) => {
     const [user, setUser] = useState(null)
+    const [isLoading, setIsLoading] = useState(false)
 
     // 1. Define your form.
     const form = useForm<z.infer<typeof authFormSchema>>({
@@ -35,7 +37,9 @@ const AuthForm = ({ type }: { type: string }) => {
     function onSubmit(values: z.infer<typeof authFormSchema>) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
+        setIsLoading(true)
         console.log(values)
+        setIsLoading(false)
     }
 
 
@@ -69,12 +73,39 @@ const AuthForm = ({ type }: { type: string }) => {
 
                             {/* for password field  */}
 
-                            <CustomInput control={form.control} name="username" label="username" placeholder="enter your user name " />
-                            <CustomInput control={form.control} name="password" label="password" placeholder="enter your password " />
+                            <CustomInput control={form.control} name="email" label="Email" placeholder="enter your user name " />
+                            <CustomInput control={form.control} name="password" label="Password" placeholder="enter your password " />
 
-                            <Button type="submit">Submit</Button>
+                            <Button type="submit" className='form-btn' disabled={isLoading}>
+
+                                {isLoading ? (
+
+                                    <>
+                                        <Loader2 size={20}
+                                            className='animate-spin' />&nbsp;
+                                        Loading...
+                                    </>
+
+                                ) : type === 'Sign In' ? 'Sign in' : 'sign up'}
+
+                            </Button>
                         </form>
                     </Form>
+
+
+
+                    <footer className='flex justify-center gap-1'>
+
+                        <p className='text-14  font-normal text-gray-600'>
+                            {type === 'sign-in' ? "Don't have an account?" : "Already have an account ?"}
+                        </p>
+
+                        <Link href={type === 'sign-in' ? '/sign-up' : '/sign-in'} className='form-links'>
+                            {type === 'sign-in' ? 'sign up' : 'Sign in'}
+                        </Link>
+
+                    </footer>
+
 
                 </>
             )}
